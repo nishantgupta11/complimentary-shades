@@ -1300,35 +1300,6 @@
     // ---------------------------------------------------------------------------
     // 2. Painting primitives
     // ---------------------------------------------------------------------------
-    // Draws `img` into a fixed-size square tile (cover-fit, cropped, centered), then
-    // mirrors that tile into a seamless 2x2 block (normal / flip-X / flip-Y / flip-XY)
-    // before repeating it. Product photos aren't seamless textures — repeating the raw
-    // crop directly butts unrelated edges together, so every tile boundary shows up as
-    // an obvious hard seam and the same crop stamped over and over. Mirroring makes each
-    // boundary reflect into its neighbor instead of jump-cutting, so the wall reads as one
-    // continuous surface rather than a visibly repeated square.
-    function makeNormalizedPattern(patternCtx, img, tileSize) {
-      const quad = document.createElement('canvas');
-      quad.width = tileSize; quad.height = tileSize;
-      const qctx = quad.getContext('2d');
-      const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
-      if (iw > 0 && ih > 0) {
-        const scale = Math.max(tileSize / iw, tileSize / ih);
-        const dw = iw * scale, dh = ih * scale;
-        qctx.drawImage(img, (tileSize - dw) / 2, (tileSize - dh) / 2, dw, dh);
-      }
-
-      const tile = document.createElement('canvas');
-      tile.width = tileSize * 2; tile.height = tileSize * 2;
-      const tctx = tile.getContext('2d');
-      tctx.drawImage(quad, 0, 0);
-      tctx.save(); tctx.translate(tileSize * 2, 0); tctx.scale(-1, 1); tctx.drawImage(quad, 0, 0); tctx.restore();
-      tctx.save(); tctx.translate(0, tileSize * 2); tctx.scale(1, -1); tctx.drawImage(quad, 0, 0); tctx.restore();
-      tctx.save(); tctx.translate(tileSize * 2, tileSize * 2); tctx.scale(-1, -1); tctx.drawImage(quad, 0, 0); tctx.restore();
-
-      return patternCtx.createPattern(tile, 'repeat');
-    }
-
     function drawWallColor(stencil, color) {
       const tmp = document.createElement('canvas');
       tmp.width = CANVAS_W; tmp.height = CANVAS_H;
@@ -1340,17 +1311,29 @@
       ctx.drawImage(tmp, 0, 0);
     }
 
-    function drawTexture(stencil, textureImg, isRealPhoto) {
+    function drawTexture(stencil, textureImg, isRealPhoto, bbox) {
       const tmp = document.createElement('canvas');
       tmp.width = CANVAS_W; tmp.height = CANVAS_H;
       const tctx = tmp.getContext('2d');
-      // real material photos: ~5 tiles across the wall reads as a continuous surface;
-      // our own small generated grain SVGs already tile at their native (small) size.
-      const pattern = isRealPhoto
-        ? makeNormalizedPattern(tctx, textureImg, Math.round(CANVAS_W / 5))
-        : tctx.createPattern(textureImg, 'repeat');
-      tctx.fillStyle = pattern;
-      tctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+      if (isRealPhoto) {
+        // real material swatch photos already show the material's pattern at its
+        // true, natural repeat density (that's what the swatch photo *is*) — draw it
+        // once, cover-fit to the wall, same as a wallpaper roomshot. Re-tiling it as a
+        // small repeating pattern on top of that just multiplies the pattern again,
+        // making it look far denser/more "stamped" than the actual material.
+        const fitBox = bbox || centerBBox;
+        if (fitBox) {
+          drawCoverFit(tctx, textureImg, fitBox.minX, fitBox.minY,
+            fitBox.maxX - fitBox.minX, fitBox.maxY - fitBox.minY);
+        } else {
+          drawCoverFit(tctx, textureImg, 0, 0, CANVAS_W, CANVAS_H);
+        }
+      } else {
+        // our own small generated grain SVGs already tile at their native (small) size.
+        const pattern = tctx.createPattern(textureImg, 'repeat');
+        tctx.fillStyle = pattern;
+        tctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+      }
       tctx.globalCompositeOperation = 'destination-in';
       tctx.drawImage(stencil, 0, 0);
 
@@ -1449,7 +1432,7 @@
         const stencil = stencils[w];
         const bbox = wallBBox ? wallBBox[w] : null;
         if (!stencil) continue;
-        try { if (state.texture) drawTexture(stencil, state.texture.img, state.texture.isRealPhoto); }
+        try { if (state.texture) drawTexture(stencil, state.texture.img, state.texture.isRealPhoto, bbox); }
         catch (e) { console.error('texture draw failed:', e); }
         try { if (state.wallpaper) drawWallpaper(stencil, state.wallpaper.img, state.wallpaper.mode, state.wallpaper.isRealPhoto, bbox); }
         catch (e) { console.error('wallpaper draw failed:', e); }
