@@ -1,0 +1,843 @@
+​<script>
+let cityShades = `
+<style>
+    .colorcarousel-variant{
+        padding: 4px 0px 20px 25px;
+    }
+
+    @media (min-width: 992px) {
+        .colorcarousel-variant{
+            background: linear-gradient(180deg, transparent -10%, rgba(252, 237, 223, 0.5) 100%);
+            border-radius: 8px;
+            border-top-right-radius: 70px;
+            margin-right: 40px;
+            border: 1px solid rgba(207, 196, 171, 1);
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant{
+            padding: 4px 0px 20px 0px;
+            background: linear-gradient(180deg, transparent -10%, rgba(252, 237, 223, 0.5) 100%);
+            border-radius: 8px;
+            border-top-right-radius: 80px;
+            margin: 0 10px;
+            border: 1px solid rgba(207, 196, 171, 1);
+        }
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info .cc-swatch-container{
+        position: relative;
+    }
+
+    .threelayoutwrapper .wrapper .colorcarousel .colorcarousel-variant .title-tab-wraper {
+        justify-content: space-between;
+    }
+
+    .colorcarousel-variant .title-tab-wraper {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 10px;
+        margin-top: 6px;
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .title-tab-wraper {
+            margin: 10px 20px 0px 16px;
+        }
+    }
+
+    .colorcarousel-variant .title-tab-wraper .title {
+        line-height: 33.6px;
+        color: #000;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .title-tab-wraper .title {
+            line-height: 22px;
+            color: #222;
+            font-size: 14px;
+            font-weight: 700;
+        }
+    }
+
+    .colorcarousel-variant .rightArrow {
+        background-position: -148px -125px !important;
+        margin-left: 10px;
+    }
+
+    @media (min-width: 320px) and (max-width: 991px) {
+        .favouriteIcon-selected.color-catalogue-revamp-list--wishList {
+            background-position: -726px -279px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .rightArrow {
+            display:none;
+        }
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info {
+        width: fit-content;
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .colorcarouseltabs-info {
+            width: 100%;
+        }
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info .tabs-panel {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 23px;
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .colorcarouseltabs-info .tabs-panel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 6%;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .threelayoutwrapper .wrapper .colorcarousel .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link {
+            height: 100%;
+        }
+    }
+
+    .threelayoutwrapper .wrapper .colorcarousel .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link {
+        flex: 0 0 calc(100% / 4 - 23px);
+        aspect-ratio: 1 / 1;
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link {
+        display: flex;
+        text-align: left;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+        transition: all .2s;
+    }
+
+    @media (min-width: 992px) {
+        .threelayoutwrapper .wrapper .colorcarousel .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link .sinceyouliked-variant-swatch,
+        .threelayoutwrapper .wrapper .colorcarousel .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link .swatch-img {
+            height: 100%;
+        }
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link .sinceyouliked-variant-swatch {
+        border-top-right-radius: 30px;
+        height: 178px;
+        width: 191px;
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link .sinceyouliked-variant-swatch {
+            width: 105px;
+            height: 110px;
+        }
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link .swatch-detail .title {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 16.8px;
+        color: #222222;
+        margin-top: 15px;
+        margin-bottom: 3px;
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link .swatch-detail .code-icon {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .colorcarousel-variant .colorcarouseltabs-info .tabs-panel .tabs-panel-link .swatch-detail .code-icon span {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 16px;
+        color: #53565a;
+    }
+
+    .colorcarousel-variant .cta.animated-btn-black.round-corner-radius-button.cc-city-primary-btn{
+        text-align: center;
+        width: fit-content;
+        margin: 0 auto;
+        margin-top: 16px;
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .cta.animated-btn-black.round-corner-radius-button.cc-city-primary-btn{
+            text-align: center;
+            width: fit-content;
+            margin: 0 auto;
+            margin-top: 0px;
+        }
+    }
+
+    .colorcarousel-variant .cc-city-primary-btn .arrow:after {
+        background: url('https://www.asianpaints.com/etc.clientlibs/apcolourcatalogue/clientlibs/clientlib-global/resources/images/download-icon-new.svg') no-repeat;
+    }
+
+    .colorcarousel-variant .cc-city-primary-btn .animated-arrow-btn-new {
+        width: fit-content !important;
+        padding: 14px 20px;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 700;
+        display: inline-flex !important;
+        gap: 10px;
+        height: 38px;
+        cursor: pointer;
+        border-radius: 45px;
+        border: 1px solid #232426;    
+    }
+
+
+    .colorcarousel-variant .cc-city-primary-btn .animated-arrow-btn-new .arrow {
+        transform: none !important;
+        display: flex;
+        transition: all .2s ease-in;
+    }
+
+    .colorcarousel-variant .cc-city-primary-btn .animated-arrow-btn-new .arrow:after {
+        content: "";
+        background: url('https://www.asianpaints.com/etc.clientlibs/apcolourcatalogue/clientlibs/clientlib-global/resources/images/download-icon-new.svg') no-repeat;
+        width: 17px;
+        height: 20px;
+        filter: contrast(1000%) invert(100%) sepia(100%) saturate(10000%) hue-rotate(90deg);    
+    }
+
+    .colorcarousel-variant .wishlist-icon{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    @media (max-width: 992px) {
+        .colorcarousel-variant .wishlist-icon{
+            right: 18px;
+        }
+    }
+</style>`
+
+$('body').append(cityShades);
+
+let cityShadeMarkup = `<div id='colourCarousel' class='colorcarousel-variant' data-attr-city=''>
+    <div class='title-tab-wraper'>
+        <div class='title'>Top Trending Shades In Your City</div>
+    </div>
+    <div class='colorcarouseltabs-info'>
+        <div id='Shade' class='colors-tab tabs-panel'>
+            <div class='cc-swatch-container' data-attr-shade-code='' data-attr-shade-name=''
+                data-attr-shade-rank='1' data-attr-shade-hex=''
+                data-attr-shade-redirection=''
+                data-attr-swatch-image=''>
+                <a href='' target='_self' class='tabs-panel-link'>
+                    <div class='sinceyouliked-variant-swatch' style=''></div>
+                    <div class='swatch-detail'>
+                        <h4 class='title'><span class='spriteIcon-Firstfold rightArrow'></span></h4>
+                        <div class='code-icon'>
+                            <span></span>
+                        </div>
+                    </div>
+                </a>
+                <span data-attr-sku='' data-attr-action='like' data-attr-type='shades'
+                    class='spriteIcon-Aprevamp favouriteIcon color-catalogue-revamp-list--wishList wishlist-icon'
+                    onclick='event.stopPropagation(); wishListPage.wishlistAction(event, true)'>
+                </span>
+            </div>
+            <div class='cc-swatch-container' data-attr-shade-code='' data-attr-shade-name=''
+                data-attr-shade-rank='2' data-attr-shade-hex=''
+                data-attr-shade-redirection=''
+                data-attr-swatch-image=''>
+                <a href='' target='_self' class='tabs-panel-link'>
+                    <div class='sinceyouliked-variant-swatch' style=''></div>
+                    <div class='swatch-detail'>
+                        <h4 class='title'><span class='spriteIcon-Firstfold rightArrow'></span></h4>
+                        <div class='code-icon'>
+                            <span></span>
+                        </div>
+                    </div>
+                </a>
+                <span data-attr-sku='' data-attr-action='like' data-attr-type='shades'
+                    class='spriteIcon-Aprevamp favouriteIcon color-catalogue-revamp-list--wishList wishlist-icon'
+                    onclick='event.stopPropagation(); wishListPage.wishlistAction(event, true)'>
+                </span>
+            </div>
+            <div class='cc-swatch-container' data-attr-shade-code='' data-attr-shade-name=''
+                data-attr-shade-rank='3' data-attr-shade-hex=''
+                data-attr-shade-redirection=''
+                data-attr-swatch-image=''>
+                <a href='' target='_self' class='tabs-panel-link'>
+                    <div class='sinceyouliked-variant-swatch' style=''></div>
+                    <div class='swatch-detail'>
+                        <h4 class='title'><span class='spriteIcon-Firstfold rightArrow'></span></h4>
+                        <div class='code-icon'>
+                            <span></span>
+                        </div>
+                    </div>
+                </a>
+                <span data-attr-sku='' data-attr-action='like' data-attr-type='shades'
+                    class='spriteIcon-Aprevamp favouriteIcon color-catalogue-revamp-list--wishList wishlist-icon'
+                    onclick='event.stopPropagation(); wishListPage.wishlistAction(event, true)'>
+                </span>
+            </div>
+            <div class='cc-swatch-container' data-attr-shade-code='' data-attr-shade-name=''
+                data-attr-shade-rank='4' data-attr-shade-hex=''
+                data-attr-shade-redirection=''
+                data-attr-swatch-image=''>
+                <a href='' target='_self' class='tabs-panel-link'>
+                    <div class='sinceyouliked-variant-swatch' style=''></div>
+                    <div class='swatch-detail'>
+                        <h4 class='title'><span class='spriteIcon-Firstfold rightArrow'></span></h4>
+                        <div class='code-icon'>
+                            <span></span>
+                        </div>
+                    </div>
+                </a>
+                <span data-attr-sku='' data-attr-action='like' data-attr-type='shades'
+                    class='spriteIcon-Aprevamp favouriteIcon color-catalogue-revamp-list--wishList wishlist-icon'
+                    onclick='event.stopPropagation(); wishListPage.wishlistAction(event, true)'>
+                </span>
+            </div>
+            <div class='cc-swatch-container' data-attr-shade-code='' data-attr-shade-name=''
+                data-attr-shade-rank='5' data-attr-shade-hex=''
+                data-attr-shade-redirection=''
+                data-attr-swatch-image=''>
+                <a href='' target='_self' class='tabs-panel-link'>
+                    <div class='sinceyouliked-variant-swatch' style=''></div>
+                    <div class='swatch-detail'>
+                        <h4 class='title'><span class='spriteIcon-Firstfold rightArrow'></span></h4>
+                        <div class='code-icon'>
+                            <span></span>
+                        </div>
+                    </div>
+                </a>
+                <span data-attr-sku='' data-attr-action='like' data-attr-type='shades'
+                    class='spriteIcon-Aprevamp favouriteIcon color-catalogue-revamp-list--wishList wishlist-icon'
+                    onclick='event.stopPropagation(); wishListPage.wishlistAction(event, true)'>
+                </span>
+            </div>
+        </div>
+        <div class='cta animated-btn-black round-corner-radius-button cc-city-primary-btn enable-exitIntent'>
+            <a href='javascript:void(0);' class='animated-arrow-btn-new trackCTA'>Download Now<span
+                    class='arrow'></span></a>
+        </div>
+        <div class='cta animated-btn-black round-corner-radius-button cc-city-primary-btn cc-download d-none'>
+            <a href='javascript:void(0);' class='animated-arrow-btn-new trackCTA' target='_blank'>Download Now<span
+                    class='arrow'></span></a>
+        </div>
+    </div>
+</div>`
+
+let sourceUrl = 'https://www.asianpaints.com/content/dam/apcolourcatalogue/asset/ap-revamp/target-assets/cc/CityShadeData.json'
+let cityShadeData = {};
+
+// ==================== LOAD & DETECT ====================
+
+// Load city data from JSON
+function loadCityData() {
+    return fetch(sourceUrl)
+        .then(function (response) { return response.text(); })
+        .then(function (text) {
+            // Strip UTF-8 BOM if present, then parse (response.json() can choke on BOM)
+            var clean = text.replace(/^\uFEFF/, '').replace(/^\u00EF\u00BB\u00BF/, '');
+            var data = JSON.parse(clean);
+            cityShadeData = data;
+            var cityCount = Object.keys(data).length;
+            initializeCarousel();
+            return data;
+        })
+        .catch(function (error) {
+            console.error('❌ Failed to load city data from JSON:', error);
+            console.error('URL:', sourceUrl);
+            // No fallback - carousel will not show if JSON fails to load
+        });
+}
+
+// Detect city from Adobe Target profile (replaced server-side by Target)
+function detectCity() {
+    var city = '${profile.geolocation.city default=""}'.toLowerCase().trim();
+
+    // Optional URL override for testing (?city=Mumbai)
+    if (!city) {
+        var params = new URLSearchParams(window.location.search);
+        var urlCity = params.get('city');
+        if (urlCity) {
+            city = urlCity.toLowerCase().trim();
+        }
+    }
+
+    return city;
+}
+
+// Check if city exists in the JSON data
+function cityExistsInData(cityName) {
+    if (!cityName || !cityShadeData) return false;
+
+    for (let key in cityShadeData) {
+        if (key.toLowerCase() === cityName.toLowerCase()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// Get city display name from data
+function getCityDisplayName(cityName) {
+    if (!cityName || !cityShadeData) return null;
+
+    for (let key in cityShadeData) {
+        if (key.toLowerCase() === cityName.toLowerCase()) {
+            return key;  // Return the actual city name from data
+        }
+    }
+
+    return null;
+}
+
+// ==================== MARKUP GENERATION ====================
+
+// Generate markup for a city (string concatenation - avoids ${} template literals that Adobe Target mangles)
+function generateCarouselMarkup(cityName, shades) {
+    if (!shades || shades.length < 5) {
+        console.warn('Not enough shades for city:', cityName);
+        return '';
+    }
+
+    var swatchesHtml = '';
+    for (var i = 0; i < 5; i++) {
+        var shade = shades[i];
+        var shadeRank = i + 1;
+        var formattedName = shade.shadeName.toLowerCase().replace(/\b\w/g, function (char) {
+            return char.toUpperCase();
+        });
+
+        swatchesHtml +=
+            "<div class='cc-swatch-container' data-attr-city='" + cityName + "' data-attr-shade-code='" + shade.shadeCode + "' data-attr-shade-name='" + shade.shadeName + "'" +
+            " data-attr-shade-rank='" + shadeRank + "' data-attr-shade-hex='" + shade.hexCode + "'" +
+            " data-attr-shade-redirection='" + shade.pageUrl + "'" +
+            " data-attr-swatch-image='" + shade.swatchImage + "'>" +
+            "<a href='" + shade.pageUrl + "' target='_self' class='tabs-panel-link'>" +
+            "<div class='sinceyouliked-variant-swatch' style='background-color: " + shade.hexCode + ";'></div>" +
+            "<div class='swatch-detail'>" +
+            "<h4 class='title'>" + formattedName + "<span class='spriteIcon-Firstfold rightArrow'></span></h4>" +
+            "<div class='code-icon'><span>" + shade.shadeCode + "</span></div>" +
+            "</div>" +
+            "</a>" +
+            "<span data-attr-sku='" + shade.shadeCode + "' data-attr-action='like' data-attr-type='shades'" +
+            " class='spriteIcon-Aprevamp favouriteIcon color-catalogue-revamp-list--wishList wishlist-icon'" +
+            " onclick='event.stopPropagation(); wishListPage.wishlistAction(event, true)'>" +
+            "</span>" +
+            "</div>";
+    }
+
+    var markup =
+        "<div id='colourCarousel' class='colorcarousel-variant' data-attr-city='" + cityName + "'>" +
+        "<div class='title-tab-wraper'>" +
+        "<div class='title'>Top Trending Shades In " + cityName + "</div>" +
+        "</div>" +
+        "<div class='colorcarouseltabs-info'>" +
+        "<div id='Shade' class='colors-tab tabs-panel'>" +
+        swatchesHtml +
+        "</div>" +
+        "<div class='cta animated-btn-black round-corner-radius-button cc-city-primary-btn enable-exitIntent'>" +
+        "<a href='javascript:void(0);' class='animated-arrow-btn-new trackCTA'>Download Now<span class='arrow'></span></a>" +
+        "</div>" +
+        "<div class='cta animated-btn-black round-corner-radius-button cc-city-primary-btn cc-download d-none'>" +
+        "<a href='javascript:void(0);' class='animated-arrow-btn-new trackCTA' target='_blank'>Download Now<span class='arrow'></span></a>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
+
+    return markup;
+}
+
+// ==================== INITIALIZATION ====================
+
+// Initialize carousel with detected city
+function initializeCarousel() {
+    var detectedCity = detectCity();
+
+    // Check if city is empty
+    if (!detectedCity || detectedCity === '') {
+        return;
+    }
+
+    // Check if city exists in data
+    if (!cityExistsInData(detectedCity)) {
+        return;
+    }
+
+    // Get shades for the detected city
+    var displayCity = getCityDisplayName(detectedCity);
+    var shades = cityShadeData[displayCity];
+
+    if (!shades || shades.length < 5) {
+        console.warn('Invalid or incomplete shade data for city:', displayCity);
+        return;
+    }
+
+    // Generate and inject carousel
+    var carouselMarkup = generateCarouselMarkup(displayCity, shades);
+
+    if ($(window).width() < 991) {
+        $(".shadeListing-wrap").prepend(carouselMarkup);
+    } else {
+        $('.right-section-shades').prepend(carouselMarkup);
+    }
+
+    setTimeout(() => {
+        _satellite.track("target_carousel", {
+            carousel_component: "CC Trending Shades",
+            parentTitle: "Top Trending Shades In " + displayCity
+        });
+    }, 3000);
+}
+
+// Load data and initialize
+loadCityData();
+
+$(document).on('click', '.enable-exitIntent.cc-city-primary-btn', function () {
+    $('.exit-intent-aem').addClass('triggered-from-cc-city');
+    $('.exit-intent-aem .exit-popup-header h3').text('Let our experts help you!');
+    if (window._satellite && typeof _satellite.track === 'function') {
+        _satellite.track('exit_intent_impression');
+    }
+})
+
+$('.exit-intent-aem .ctaComp.baseBtn button').on('click', function () {
+    if (!$(this).closest('.exit-intent-aem').hasClass('triggered-from-cc-city')) {
+        return;
+    }
+    let CityparentTitle = $('.colorcarousel-variant').find('.title-tab-wraper .title').text() || 'Top Trending Shades';
+    let username = $(this).closest('.form-revamp-exitIntent').find('.form-global #enquire-name').val();
+    let useremail = $(this).closest('.form-revamp-exitIntent').find('.form-global #enquire-email').val();
+    let usermobile = $(this).closest('.form-revamp-exitIntent').find('.form-global #enquire-mobile').val();
+    let userpincode = $(this).closest('.form-revamp-exitIntent').find('.form-global #enquire-pincode').val();
+    let selectedRadioCustomerResponseOne = $(this).closest('.form-revamp-exitIntent').find('input[name="CUSTOM_RADIO_customer_response_one"]:checked');
+    let selectedRadioCustomerResponseTwo = $(this).closest('.form-revamp-exitIntent').find('input[name="CUSTOM_RADIO_customer_response_two"]:checked');
+    if (username.length > 0 && useremail.length > 0 && usermobile.length > 0 && userpincode.length > 0 && selectedRadioCustomerResponseTwo.length > 0 && selectedRadioCustomerResponseOne.length > 0) {
+        ccUserName = ccToTitleCase(username);
+        $('.cc-city-primary-btn').addClass('d-none');
+        $('.cc-download').removeClass('d-none');
+        setTimeout(function () {
+            // $('.cc-download a').trigger('click');
+                generateTrendingShadesPdf();
+            if (window._satellite && typeof _satellite.track === 'function') {
+                _satellite.track("custom_cta_click", {
+                    cta_: "Download Now",
+                    parentTitle: CityparentTitle,
+                    "flowType": "Download Button One"
+                });
+            }
+        }, 6000)
+    }
+});
+
+$(document).on('click', '.colorcarousel-variant .cc-swatch-container', function () {
+    let $swatch = $(this);
+    let shadeCode = $swatch.attr('data-attr-shade-code') || '';
+    let shadeTitle = $swatch.attr('data-attr-shade-name') || '';
+    let redirectionLink = $swatch.attr('data-attr-shade-redirection') || '';
+    let $carousel = $swatch.closest('.colorcarousel-variant');
+    let parentTitle = $carousel.find('.title-tab-wraper .title').text() || 'Top Trending Shades';
+
+    _satellite.track("shades_click", {
+        shadeCode: shadeCode,
+        shadeTitle: shadeTitle,
+        parentTitle: parentTitle,
+        redirectionLink: redirectionLink
+    });
+})
+
+$(document).on('click', '.cc-download a', function (e) {
+    let $carousel = $(this).closest('.colorcarousel-variant');
+    let parentTitle = $carousel.find('.title-tab-wraper .title').text() || 'Top Trending Shades';
+
+    _satellite.track("custom_cta_click", {
+        cta_: "Download Now",
+        parentTitle: parentTitle,
+        "flowType": "Download Button Two"
+    });
+})
+
+// ---- Trending Shades PDF ----
+let ccPdfEndImages = [
+    'https://www.asianpaints.com/content/dam/apcolourcatalogue/asset/ap-revamp/target-assets/cc/BHPS_Banner.png',
+    'https://www.asianpaints.com/content/dam/apcolourcatalogue/asset/ap-revamp/target-assets/cc/City_Banner.png'
+];
+let ccUserName = '';
+let ccPdfName = '';
+
+function ccToTitleCase(str) {
+    return (str || '').toLowerCase().replace(/\b\w/g, function (char) {
+        return char.toUpperCase();
+    });
+}
+
+function ccHexToRgb(hex) {
+    let clean = (hex || '').replace('#', '');
+    if (clean.length === 3) {
+        clean = clean.split('').map(function (c) { return c + c; }).join('');
+    }
+    let num = parseInt(clean, 16);
+    if (isNaN(num)) {
+        return { r: 255, g: 255, b: 255 };
+    }
+    return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+}
+
+function ccIsLight(rgb) {
+    // Perceived luminance (0-255); above ~150 is a light background
+    return (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) > 150;
+}
+
+function ccLoadScript(src) {
+    return new Promise(function (resolve, reject) {
+        if (document.querySelector('script[data-cc-src="' + src + '"]')) {
+            resolve();
+            return;
+        }
+        let script = document.createElement('script');
+        script.src = src;
+        script.setAttribute('data-cc-src', src);
+        script.onload = function () { resolve(); };
+        script.onerror = function () { reject(new Error('Failed to load ' + src)); };
+        document.head.appendChild(script);
+    });
+}
+
+function ccEnsureJsPdf() {
+    if (window.jspdf && window.jspdf.jsPDF) {
+        return Promise.resolve();
+    }
+    return ccLoadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+}
+
+function ccLoadImage(url) {
+    return new Promise(function (resolve) {
+        if (!url) {
+            resolve(null);
+            return;
+        }
+        let img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function () {
+            try {
+                let canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                let ctx = canvas.getContext('2d');
+                // Flatten transparency onto white so transparent PNGs don't turn black in JPEG
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0);
+                resolve({ dataUrl: canvas.toDataURL('image/jpeg', 0.92), w: img.naturalWidth, h: img.naturalHeight });
+            } catch (e) {
+                resolve(null); // canvas tainted (CORS)
+            }
+        };
+        img.onerror = function () { resolve(null); };
+        img.src = url;
+    });
+}
+
+function ccCollectShades() {
+    let shades = [];
+    $('#Shade .cc-swatch-container').each(function () {
+        let $s = $(this);
+        shades.push({
+            code: $s.attr('data-attr-shade-code') || '',
+            name: ccToTitleCase($s.attr('data-attr-shade-name') || ''),
+            hex: $s.attr('data-attr-shade-hex') || '#ffffff',
+            image: $s.attr('data-attr-swatch-image') || ''
+        });
+    });
+    return shades;
+}
+
+function ccBuildPdf(city, userName, shades, imgMap) {
+    let jsPDF = window.jspdf.jsPDF;
+    let doc = new jsPDF('p', 'mm', 'a4');
+    let pageW = 210;
+    let pageH = 297;
+    let PX = 210 / 595; // design px -> mm (artboard 595x842 = A4 @ 72dpi)
+
+    let frameW = 198;        // near full width; equal small gap on both sides
+    let radius = 130 * PX;   // ~46mm top corner radius
+    let sideM = 6;           // equal margin on both sides
+    let frameY = 8;
+    let pad = 8;
+    let cw = frameW - pad * 2;
+    let cardAspect = 535.55 / 197.33; // ~2.714 : 1 (card fill width : hug height)
+    let cardH = cw / cardAspect;
+    let cardGap = 6;
+    let frameH1 = 2 * cardH + 2 * cardGap + (cardH * 0.5); // page 1: two full cards + gaps + 50% of third card (center of second card = Sonnet)
+    let frameH2 = 2 * cardH + 2 * cardGap + 18;   // page 2: both cards 4 & 5 + gaps + increased buffer space
+
+    // Swatch-shaped frame: only one top corner rounded (~130px), like border-radius on a swatch
+    function drawFrame(x, y, w, h, corner) {
+        let R = radius;
+        let k = 0.5523; // cubic-bezier circle approximation
+        let x0 = x, y0 = y, x1 = x + w, y1 = y + h;
+        doc.setDrawColor(224, 216, 202);
+        doc.setLineWidth(0.5);
+        if (corner === 'TL') {
+            doc.lines([
+                [x1 - (x0 + R), 0],                 // top edge
+                [0, y1 - y0],                       // right edge down
+                [-(x1 - x0), 0],                    // bottom edge
+                [0, (y0 + R) - y1],                 // left edge up to curve start
+                [0, -R * k, R * (1 - k), -R, R, -R] // top-left rounded corner
+            ], x0 + R, y0, [1, 1], 'S', true);
+        } else { // 'TR'
+            doc.lines([
+                [(x1 - R) - x0, 0],                 // top edge to curve start
+                [R * k, 0, R, R - R * k, R, R],     // top-right rounded corner
+                [0, y1 - (y0 + R)],                 // right edge down
+                [-(x1 - x0), 0]                     // bottom edge
+            ], x0, y0, [1, 1], 'S', true);
+        }
+    }
+
+    function drawCard(x, y, shade) {
+        let gap = cardGap; // 6mm gap between image and color block, same as card gap
+        let availableW = cw - gap;
+        let cardImgW = availableW * 0.62;
+        let cardColorW = availableW * 0.38;
+        let img = imgMap[shade.image];
+        if (img && img.dataUrl) {
+            doc.addImage(img.dataUrl, 'JPEG', x, y, cardImgW, cardH);
+        } else {
+            doc.setFillColor(238, 238, 238);
+            doc.rect(x, y, cardImgW, cardH, 'F');
+        }
+
+        let cx = x + cardImgW + gap;
+        let rgb = ccHexToRgb(shade.hex);
+        doc.setFillColor(rgb.r, rgb.g, rgb.b);
+        doc.rect(cx, y, cardColorW, cardH, 'F');
+
+        let dark = !ccIsLight(rgb);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(dark ? 255 : 51, dark ? 255 : 51, dark ? 255 : 51);
+        doc.text(shade.name, cx + cardColorW / 2, y + cardH / 2 - 1, { align: 'center' });
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9.5);
+        if (dark) {
+            doc.setTextColor(230, 230, 230);
+        } else {
+            doc.setTextColor(120, 120, 120);
+        }
+        doc.text(shade.code, cx + cardColorW / 2, y + cardH / 2 + 5, { align: 'center' });
+    }
+
+    // ---- Page 1: right-aligned box (top-right rounded), heading + 3 cards ----
+    let f1x = pageW - sideM - frameW;
+    let c1x = f1x + pad;
+    // Draw frame first so border sits behind content
+    drawFrame(f1x, frameY, frameW, frameH1, 'TR');
+
+    if (userName) {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+        doc.setTextColor(51, 51, 51);
+        doc.text('Dear ', c1x, 26);
+        let dearW = doc.getTextWidth('Dear ');
+        doc.setFont('helvetica', 'bold');
+        doc.text(userName + ',', c1x + dearW, 26);
+    }
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(40);
+    doc.setTextColor(207, 196, 171); // rgba(207,196,171)
+    doc.setCharSpace(-0.85); // ~ -6% of 40pt
+    doc.text(shades.length + ' Trending Shades In', c1x, 46);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(36);
+    doc.setTextColor(93, 79, 67); // rgba(93,79,67)
+    doc.setCharSpace(-0.63); // ~ -5% of 36pt
+    doc.text(city, c1x, 58);
+    doc.setCharSpace(0);
+
+    let y = 70;
+    shades.slice(0, 3).forEach(function (shade) {
+        drawCard(c1x, y, shade);
+        y += cardH + cardGap;
+    });
+
+    // ---- Page 2: left-aligned box (top-left rounded), 2 cards + banner ----
+    doc.addPage();
+    let f2x = sideM;
+    let c2x = f2x + pad;
+    // Draw frame first so border sits behind content
+    drawFrame(f2x, frameY, frameW, frameH2, 'TL');
+
+    y = frameY + pad + 6;
+    shades.slice(3).forEach(function (shade) {
+        drawCard(c2x, y, shade);
+        y += cardH + cardGap;
+    });
+    let contentBottom = y - cardGap;
+
+    // Painting-service banner inside the page-2 box, below the cards
+    let banner = imgMap[ccPdfEndImages[0]];
+    if (banner && banner.dataUrl) {
+        let bannerH = (pageW - 2 * sideM) * (banner.h / banner.w);
+        let bannerY = contentBottom + 24;
+        doc.addImage(banner.dataUrl, 'JPEG', sideM, bannerY, pageW - 2 * sideM, bannerH);
+        // Add clickable tel: link to the banner
+        doc.link(sideM, bannerY, pageW - 2 * sideM, bannerH, { url: 'tel:1800-209-5678' });
+    }
+
+    // Cityscape pinned to the page bottom (outside the box)
+    let footer = ccPdfEndImages.length > 1 ? imgMap[ccPdfEndImages[ccPdfEndImages.length - 1]] : null;
+    if (footer && footer.dataUrl) {
+        let footerH = (pageW - 2 * sideM) * (footer.h / footer.w);
+        doc.addImage(footer.dataUrl, 'JPEG', sideM, pageH - footerH, pageW - 2 * sideM, footerH);
+    }
+
+    // Generate and store PDF filename
+    ccPdfName = 'Trending-Shades-' + (city || 'Asian-Paints').replace(/\s+/g, '-') + '.pdf';
+    doc.save(ccPdfName);
+}
+
+function generateTrendingShadesPdf() {
+    ccEnsureJsPdf().then(function () {
+        let city = $('#colourCarousel').attr('data-attr-city') || '';
+        if (!city) {
+            let titleText = $('#colourCarousel .title-tab-wraper .title').first().text() || '';
+            city = titleText.replace(/.*\bIn\b\s*/i, '').trim();
+        }
+        let shades = ccCollectShades();
+        let urls = shades.map(function (s) { return s.image; }).concat(ccPdfEndImages);
+        return Promise.all(urls.map(ccLoadImage)).then(function (loaded) {
+            let imgMap = {};
+            urls.forEach(function (url, i) { imgMap[url] = loaded[i]; });
+            ccBuildPdf(city, ccUserName, shades, imgMap);
+        });
+    }).catch(function (err) {
+        console.error('Trending Shades PDF generation failed:', err);
+    });
+}
+
+// Generate the PDF instead of opening the static file
+$(document).on('click', '.cc-download a', function (e) {
+    e.preventDefault();
+    generateTrendingShadesPdf();
+});
+</script>
